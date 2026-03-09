@@ -686,6 +686,22 @@ public class BKDReader extends PointValues {
     }
 
     private void readNodeData(boolean isLeft) throws IOException {
+      if (level < 1) {
+        throw new CorruptIndexException(
+            "Unexpected tree traversal state: level="
+                + level
+                + " must be >= 1. This may indicate a tree navigation bug or index corruption.",
+            innerNodes);
+      }
+      if (level >= leafBlockFPStack.length) {
+        throw new CorruptIndexException(
+            "Unexpected tree traversal state: level="
+                + level
+                + " exceeds maximum expected tree depth="
+                + (leafBlockFPStack.length - 1)
+                + ". This may indicate a tree navigation bug or index corruption.",
+            innerNodes);
+      }
       leafBlockFPStack[level] = leafBlockFPStack[level - 1];
       if (isLeft == false) {
         // read leaf block FP delta
