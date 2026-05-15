@@ -1,0 +1,60 @@
+{
+  "description": "Prefix query on hierarchical category paths",
+  "source": "TestPrefixQuery.testPrefixQuery (Lucene core)",
+  "dataset": "prefix-categories",
+  "schema": "keyword-category-field",
+  "tests": [
+    {
+      "id": "prefix-all-computers",
+      "description": "Prefix '/Computers' matches all 3 categories (including subcategories)",
+      "query": {
+        "type": "prefix",
+        "field": "category",
+        "value": "/Computers"
+      },
+      "expected": {
+        "count": 3
+      }
+    },
+    {
+      "id": "prefix-mac-only",
+      "description": "Prefix '/Computers/Mac' matches only the Mac category",
+      "query": {
+        "type": "prefix",
+        "field": "category",
+        "value": "/Computers/Mac"
+      },
+      "expected": {
+        "count": 1,
+        "hits": {
+          "must_contain": ["/Computers/Mac"]
+        },
+        "match_field": "category"
+      }
+    },
+    {
+      "id": "prefix-empty-matches-all",
+      "description": "Empty prefix matches all documents",
+      "query": {
+        "type": "prefix",
+        "field": "category",
+        "value": ""
+      },
+      "expected": {
+        "count": 3
+      }
+    },
+    {
+      "id": "prefix-no-match",
+      "description": "Prefix '/Electronics' matches nothing",
+      "query": {
+        "type": "prefix",
+        "field": "category",
+        "value": "/Electronics"
+      },
+      "expected": {
+        "count": 0
+      }
+    }
+  ]
+}

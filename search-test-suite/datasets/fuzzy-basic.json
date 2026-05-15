@@ -1,0 +1,7 @@
+{
+  "id": "fuzzy-basic",
+  "description": "Single document for basic fuzzy prefix test",
+  "documents": [
+    { "_id": "1", "field": "abc" }
+  ]
+}

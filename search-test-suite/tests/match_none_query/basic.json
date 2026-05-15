@@ -1,0 +1,47 @@
+{
+  "description": "Match-none query returns zero documents",
+  "source": "TestMatchNoDocsQuery.testQuery (Lucene core)",
+  "dataset": "match-none-basic",
+  "schema": "text-key-field",
+  "tests": [
+    {
+      "id": "match-none-returns-zero",
+      "description": "Match-none query returns 0 documents",
+      "query": {
+        "type": "match_none",
+        "reason": "field not found"
+      },
+      "expected": {
+        "count": 0
+      }
+    },
+    {
+      "id": "match-none-in-boolean-must",
+      "description": "Boolean SHOULD(term) + MUST(match_none) returns 0 (MUST fails)",
+      "query": {
+        "type": "boolean",
+        "clauses": [
+          { "occur": "should", "query": { "type": "term", "field": "key", "value": "five" } },
+          { "occur": "must", "query": { "type": "match_none", "reason": "field not found" } }
+        ]
+      },
+      "expected": {
+        "count": 0
+      }
+    },
+    {
+      "id": "match-none-in-boolean-should",
+      "description": "Boolean SHOULD(term 'one') + SHOULD(match_none) returns 1 (match_none is ignored in SHOULD)",
+      "query": {
+        "type": "boolean",
+        "clauses": [
+          { "occur": "should", "query": { "type": "term", "field": "key", "value": "one" } },
+          { "occur": "should", "query": { "type": "match_none", "reason": "field not found" } }
+        ]
+      },
+      "expected": {
+        "count": 1
+      }
+    }
+  ]
+}

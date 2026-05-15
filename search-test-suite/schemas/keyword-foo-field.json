@@ -1,0 +1,12 @@
+{
+  "id": "keyword-foo-field",
+  "description": "A keyword field named 'foo' for term query tests",
+  "fields": [
+    {
+      "name": "foo",
+      "type": "keyword",
+      "stored": false,
+      "indexed": true
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "description": "Wildcard query with asterisk (*) patterns",
+  "source": "TestWildcardQuery.testAsterisk (Lucene core)",
+  "dataset": "wildcard-metals",
+  "schema": "text-body-field",
+  "tests": [
+    {
+      "id": "wildcard-trailing-star",
+      "description": "Pattern 'metal*' matches both 'metal' and 'metals'",
+      "query": {
+        "type": "wildcard",
+        "field": "body",
+        "pattern": "metal*"
+      },
+      "expected": {
+        "count": 2
+      }
+    },
+    {
+      "id": "wildcard-middle-star",
+      "description": "Pattern 'm*tal' matches 'metal' only (single token match)",
+      "query": {
+        "type": "wildcard",
+        "field": "body",
+        "pattern": "m*tal"
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "wildcard-middle-star-trailing",
+      "description": "Pattern 'm*tal*' matches both 'metal' and 'metals'",
+      "query": {
+        "type": "wildcard",
+        "field": "body",
+        "pattern": "m*tal*"
+      },
+      "expected": {
+        "count": 2
+      }
+    },
+    {
+      "id": "wildcard-middle-star-suffix",
+      "description": "Pattern 'm*tals' matches only 'metals'",
+      "query": {
+        "type": "wildcard",
+        "field": "body",
+        "pattern": "m*tals"
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "wildcard-leading-star",
+      "description": "Pattern '*tal' matches 'metal'",
+      "query": {
+        "type": "wildcard",
+        "field": "body",
+        "pattern": "*tal"
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "wildcard-leading-and-trailing-star",
+      "description": "Pattern '*tal*' matches both 'metal' and 'metals'",
+      "query": {
+        "type": "wildcard",
+        "field": "body",
+        "pattern": "*tal*"
+      },
+      "expected": {
+        "count": 2
+      }
+    }
+  ]
+}

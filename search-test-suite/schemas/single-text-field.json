@@ -1,0 +1,16 @@
+{
+  "id": "single-text-field",
+  "description": "A single analyzed text field with whitespace tokenizer, stored and indexed",
+  "fields": [
+    {
+      "name": "field",
+      "type": "text",
+      "stored": true,
+      "indexed": true,
+      "analyzer": {
+        "tokenizer": "whitespace",
+        "lowercase": true
+      }
+    }
+  ]
+}

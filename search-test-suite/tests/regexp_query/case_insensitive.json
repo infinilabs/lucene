@@ -1,0 +1,33 @@
+{
+  "description": "Regexp query with case-insensitive flag",
+  "source": "TestRegexpQuery.testCaseInsensitive (Lucene core)",
+  "dataset": "regexp-text",
+  "schema": "single-text-field",
+  "tests": [
+    {
+      "id": "regexp-case-sensitive-no-match",
+      "description": "Pattern 'Quick' (case-sensitive) does NOT match 'quick'",
+      "query": {
+        "type": "regexp",
+        "field": "field",
+        "pattern": "Quick"
+      },
+      "expected": {
+        "count": 0
+      }
+    },
+    {
+      "id": "regexp-case-insensitive-match",
+      "description": "Pattern 'Quick' with case_insensitive flag matches 'quick'",
+      "query": {
+        "type": "regexp",
+        "field": "field",
+        "pattern": "Quick",
+        "flags": ["case_insensitive"]
+      },
+      "expected": {
+        "count": 1
+      }
+    }
+  ]
+}

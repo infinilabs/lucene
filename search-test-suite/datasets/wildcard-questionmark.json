@@ -1,0 +1,10 @@
+{
+  "id": "wildcard-questionmark",
+  "description": "Words for single-character wildcard (?) tests",
+  "documents": [
+    { "_id": "1", "body": "metal" },
+    { "_id": "2", "body": "metals" },
+    { "_id": "3", "body": "mXtals" },
+    { "_id": "4", "body": "mXtXls" }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "text-body-field",
+  "description": "A text field named 'body' for wildcard and search tests",
+  "fields": [
+    {
+      "name": "body",
+      "type": "text",
+      "stored": true,
+      "indexed": true,
+      "analyzer": {
+        "tokenizer": "whitespace",
+        "lowercase": true
+      }
+    }
+  ]
+}

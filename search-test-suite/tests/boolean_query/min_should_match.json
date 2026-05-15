@@ -1,0 +1,38 @@
+{
+  "description": "Boolean query with min_should_match parameter",
+  "source": "TestBooleanQuery (Lucene core)",
+  "dataset": "boolean-mixed",
+  "schema": "text-key-field",
+  "tests": [
+    {
+      "id": "bool-min-should-match-1",
+      "description": "min_should_match=1 with two SHOULD clauses requires at least one match",
+      "query": {
+        "type": "boolean",
+        "clauses": [
+          { "occur": "should", "query": { "type": "term", "field": "key", "value": "one" } },
+          { "occur": "should", "query": { "type": "term", "field": "key", "value": "nonexistent" } }
+        ],
+        "min_should_match": 1
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "bool-min-should-match-2-no-hit",
+      "description": "min_should_match=2 but only one clause matches, so 0 results",
+      "query": {
+        "type": "boolean",
+        "clauses": [
+          { "occur": "should", "query": { "type": "term", "field": "key", "value": "one" } },
+          { "occur": "should", "query": { "type": "term", "field": "key", "value": "nonexistent" } }
+        ],
+        "min_should_match": 2
+      },
+      "expected": {
+        "count": 0
+      }
+    }
+  ]
+}

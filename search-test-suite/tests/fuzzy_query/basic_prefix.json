@@ -1,0 +1,22 @@
+{
+  "description": "Basic fuzzy query with prefix length",
+  "source": "TestFuzzyQuery.testBasicPrefix (Lucene core)",
+  "dataset": "fuzzy-basic",
+  "schema": "single-keyword-field",
+  "tests": [
+    {
+      "id": "fuzzy-basic-exact",
+      "description": "Fuzzy query for 'abc' with prefix_length=1 matches the exact document",
+      "query": {
+        "type": "fuzzy",
+        "field": "field",
+        "value": "abc",
+        "max_edits": 2,
+        "prefix_length": 1
+      },
+      "expected": {
+        "count": 1
+      }
+    }
+  ]
+}

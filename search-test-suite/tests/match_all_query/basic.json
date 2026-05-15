@@ -1,0 +1,32 @@
+{
+  "description": "Match-all query returns every document in the index",
+  "source": "TestMatchAllDocsQuery.testQuery (Lucene core)",
+  "dataset": "match-all-basic",
+  "schema": "text-key-field",
+  "tests": [
+    {
+      "id": "match-all-returns-all",
+      "description": "Match-all query returns all 3 documents",
+      "query": {
+        "type": "match_all"
+      },
+      "expected": {
+        "count": 3
+      }
+    },
+    {
+      "id": "match-all-with-must-term",
+      "description": "Boolean MUST(match_all) + MUST(term 'three') returns 1 doc",
+      "query": {
+        "type": "boolean",
+        "clauses": [
+          { "occur": "must", "query": { "type": "match_all" } },
+          { "occur": "must", "query": { "type": "term", "field": "key", "value": "three" } }
+        ]
+      },
+      "expected": {
+        "count": 1
+      }
+    }
+  ]
+}

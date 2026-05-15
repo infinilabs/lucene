@@ -1,0 +1,13 @@
+{
+  "id": "fuzzy-words",
+  "description": "Words with incremental edit distances for fuzzy matching tests",
+  "documents": [
+    { "_id": "1", "field": "aaaaa" },
+    { "_id": "2", "field": "aaaab" },
+    { "_id": "3", "field": "aaabb" },
+    { "_id": "4", "field": "aabbb" },
+    { "_id": "5", "field": "abbbb" },
+    { "_id": "6", "field": "bbbbb" },
+    { "_id": "7", "field": "ddddd" }
+  ]
+}

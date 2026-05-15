@@ -1,0 +1,9 @@
+{
+  "id": "prefix-categories",
+  "description": "Hierarchical category paths for prefix query tests",
+  "documents": [
+    { "_id": "1", "category": "/Computers" },
+    { "_id": "2", "category": "/Computers/Mac" },
+    { "_id": "3", "category": "/Computers/Windows" }
+  ]
+}

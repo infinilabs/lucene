@@ -1,0 +1,56 @@
+{
+  "description": "Wildcard query with question mark (?) single-character patterns",
+  "source": "TestWildcardQuery.testQuestionmark (Lucene core)",
+  "dataset": "wildcard-questionmark",
+  "schema": "text-body-field",
+  "tests": [
+    {
+      "id": "wildcard-single-question",
+      "description": "Pattern 'm?tal' matches 'metal' (e→? substitution)",
+      "query": {
+        "type": "wildcard",
+        "field": "body",
+        "pattern": "m?tal"
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "wildcard-trailing-question",
+      "description": "Pattern 'metal?' matches 'metals' (s→? at end)",
+      "query": {
+        "type": "wildcard",
+        "field": "body",
+        "pattern": "metal?"
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "wildcard-two-questions",
+      "description": "Pattern 'm?t?ls' matches 'metals', 'mXtals', 'mXtXls' (3 matches)",
+      "query": {
+        "type": "wildcard",
+        "field": "body",
+        "pattern": "m?t?ls"
+      },
+      "expected": {
+        "count": 3
+      }
+    },
+    {
+      "id": "wildcard-double-trailing-question",
+      "description": "Pattern 'meta??' matches 'metals' only",
+      "query": {
+        "type": "wildcard",
+        "field": "body",
+        "pattern": "meta??"
+      },
+      "expected": {
+        "count": 1
+      }
+    }
+  ]
+}

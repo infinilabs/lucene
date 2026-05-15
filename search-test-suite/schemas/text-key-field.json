@@ -1,0 +1,16 @@
+{
+  "id": "text-key-field",
+  "description": "A text field named 'key' for match-all and boolean tests",
+  "fields": [
+    {
+      "name": "key",
+      "type": "text",
+      "stored": true,
+      "indexed": true,
+      "analyzer": {
+        "tokenizer": "whitespace",
+        "lowercase": true
+      }
+    }
+  ]
+}

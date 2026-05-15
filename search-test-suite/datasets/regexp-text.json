@@ -1,0 +1,7 @@
+{
+  "id": "regexp-text",
+  "description": "Rich text document for regexp query pattern matching tests",
+  "documents": [
+    { "_id": "1", "field": "the quick brown fox jumps over the lazy ??? dog 493432 49344 [foo] 12.3 \\ ς" }
+  ]
+}

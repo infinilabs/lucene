@@ -1,0 +1,15 @@
+{
+  "id": "phrase-sentences",
+  "description": "Documents with ordered word sequences for phrase query tests",
+  "documents": [
+    {
+      "_id": "1",
+      "field": "one two three four five",
+      "repeated": "this is a repeated field - first part",
+      "repeated_2": "second part of a repeated field",
+      "palindrome": "one two three two one"
+    },
+    { "_id": "2", "nonexist": "phrase exist notexist exist found" },
+    { "_id": "3", "nonexist": "phrase exist notexist exist found" }
+  ]
+}

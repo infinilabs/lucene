@@ -1,0 +1,12 @@
+{
+  "id": "single-keyword-field",
+  "description": "A single non-analyzed keyword field, stored and indexed",
+  "fields": [
+    {
+      "name": "field",
+      "type": "keyword",
+      "stored": true,
+      "indexed": true
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "description": "Boolean query MUST_NOT clause excludes matching documents",
+  "source": "TestBooleanQuery.testDeMorgan + TestMatchAllDocsQuery (Lucene core)",
+  "dataset": "boolean-mixed",
+  "schema": "text-key-field",
+  "tests": [
+    {
+      "id": "bool-must-not-excludes",
+      "description": "MUST match_all + MUST_NOT term('two') excludes the 'two' document",
+      "query": {
+        "type": "boolean",
+        "clauses": [
+          { "occur": "must", "query": { "type": "match_all" } },
+          { "occur": "must_not", "query": { "type": "term", "field": "key", "value": "two" } }
+        ]
+      },
+      "expected": {
+        "count": 2,
+        "hits": {
+          "must_contain": ["one", "three four"],
+          "must_not_contain": ["two"]
+        },
+        "match_field": "key"
+      }
+    },
+    {
+      "id": "bool-must-not-all-excluded",
+      "description": "MUST_NOT that matches all documents with MUST match_all returns 0 hits",
+      "query": {
+        "type": "boolean",
+        "clauses": [
+          { "occur": "must", "query": { "type": "term", "field": "key", "value": "one" } },
+          { "occur": "must_not", "query": { "type": "term", "field": "key", "value": "one" } }
+        ]
+      },
+      "expected": {
+        "count": 0
+      }
+    }
+  ]
+}

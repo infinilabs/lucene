@@ -1,0 +1,34 @@
+{
+  "description": "Phrase query with slop=1 allows terms to be 1 position apart",
+  "source": "TestPhraseQuery.testSlop1 (Lucene core)",
+  "dataset": "phrase-sentences",
+  "schema": "text-with-positions",
+  "tests": [
+    {
+      "id": "phrase-slop1-in-order",
+      "description": "Terms 'one two' with slop=1 matches (already adjacent, in order)",
+      "query": {
+        "type": "phrase",
+        "field": "field",
+        "terms": ["one", "two"],
+        "slop": 1
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "phrase-slop1-reversed-no-match",
+      "description": "Reversed terms 'two one' with slop=1 does NOT match (need slop >= 2 for reversal)",
+      "query": {
+        "type": "phrase",
+        "field": "field",
+        "terms": ["two", "one"],
+        "slop": 1
+      },
+      "expected": {
+        "count": 0
+      }
+    }
+  ]
+}

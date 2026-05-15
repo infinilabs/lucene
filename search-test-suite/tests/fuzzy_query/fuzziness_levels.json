@@ -1,0 +1,125 @@
+{
+  "description": "Fuzzy query with different prefix lengths returns decreasing matches",
+  "source": "TestFuzzyQuery.testFuzziness (Lucene core)",
+  "dataset": "fuzzy-words",
+  "schema": "single-keyword-field",
+  "tests": [
+    {
+      "id": "fuzzy-prefix-0",
+      "description": "Fuzzy 'aaaaa' with max_edits=2, prefix_length=0 matches 3 docs",
+      "query": {
+        "type": "fuzzy",
+        "field": "field",
+        "value": "aaaaa",
+        "max_edits": 2,
+        "prefix_length": 0
+      },
+      "expected": {
+        "count": 3,
+        "hits": {
+          "must_contain": ["aaaaa", "aaaab", "aaabb"],
+          "must_not_contain": ["aabbb", "abbbb", "bbbbb", "ddddd"]
+        }
+      }
+    },
+    {
+      "id": "fuzzy-prefix-1",
+      "description": "Fuzzy 'aaaaa' with prefix_length=1 still matches 3 (all start with 'a')",
+      "query": {
+        "type": "fuzzy",
+        "field": "field",
+        "value": "aaaaa",
+        "max_edits": 2,
+        "prefix_length": 1
+      },
+      "expected": {
+        "count": 3
+      }
+    },
+    {
+      "id": "fuzzy-prefix-2",
+      "description": "Fuzzy 'aaaaa' with prefix_length=2 still matches 3",
+      "query": {
+        "type": "fuzzy",
+        "field": "field",
+        "value": "aaaaa",
+        "max_edits": 2,
+        "prefix_length": 2
+      },
+      "expected": {
+        "count": 3
+      }
+    },
+    {
+      "id": "fuzzy-prefix-3",
+      "description": "Fuzzy 'aaaaa' with prefix_length=3 still matches 3",
+      "query": {
+        "type": "fuzzy",
+        "field": "field",
+        "value": "aaaaa",
+        "max_edits": 2,
+        "prefix_length": 3
+      },
+      "expected": {
+        "count": 3
+      }
+    },
+    {
+      "id": "fuzzy-prefix-4",
+      "description": "Fuzzy 'aaaaa' with prefix_length=4 matches only 2 (aaaaa, aaaab)",
+      "query": {
+        "type": "fuzzy",
+        "field": "field",
+        "value": "aaaaa",
+        "max_edits": 2,
+        "prefix_length": 4
+      },
+      "expected": {
+        "count": 2
+      }
+    },
+    {
+      "id": "fuzzy-prefix-5",
+      "description": "Fuzzy 'aaaaa' with prefix_length=5 matches only exact (aaaaa)",
+      "query": {
+        "type": "fuzzy",
+        "field": "field",
+        "value": "aaaaa",
+        "max_edits": 2,
+        "prefix_length": 5
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "fuzzy-prefix-6",
+      "description": "Fuzzy 'aaaaa' with prefix_length=6 (longer than term) matches exact only",
+      "query": {
+        "type": "fuzzy",
+        "field": "field",
+        "value": "aaaaa",
+        "max_edits": 2,
+        "prefix_length": 6
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "fuzzy-similar-query",
+      "description": "Fuzzy 'aaaac' matches aaaaa, aaaab, aaabb (edit distance within 2)",
+      "query": {
+        "type": "fuzzy",
+        "field": "field",
+        "value": "aaaac",
+        "max_edits": 2,
+        "prefix_length": 0
+      },
+      "expected": {
+        "count": 3,
+        "ordered": ["aaaaa", "aaaab", "aaabb"]
+      }
+    }
+  ]
+}
