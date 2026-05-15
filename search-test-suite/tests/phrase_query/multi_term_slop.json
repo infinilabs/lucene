@@ -1,0 +1,47 @@
+{
+  "description": "Phrase query with multiple terms and varying slop values",
+  "source": "TestPhraseQuery.testMultipleTerms (Lucene core)",
+  "dataset": "phrase-sentences",
+  "schema": "text-with-positions",
+  "tests": [
+    {
+      "id": "phrase-multi-term-slop2-match",
+      "description": "Three terms 'one three five' with slop=2 matches (two total position moves)",
+      "query": {
+        "type": "phrase",
+        "field": "field",
+        "terms": ["one", "three", "five"],
+        "slop": 2
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "phrase-multi-term-reversed-slop5-no-match",
+      "description": "Reversed three terms 'five three one' with slop=5 does NOT match (needs 6 moves)",
+      "query": {
+        "type": "phrase",
+        "field": "field",
+        "terms": ["five", "three", "one"],
+        "slop": 5
+      },
+      "expected": {
+        "count": 0
+      }
+    },
+    {
+      "id": "phrase-multi-term-reversed-slop6-match",
+      "description": "Reversed three terms 'five three one' with slop=6 matches",
+      "query": {
+        "type": "phrase",
+        "field": "field",
+        "terms": ["five", "three", "one"],
+        "slop": 6
+      },
+      "expected": {
+        "count": 1
+      }
+    }
+  ]
+}

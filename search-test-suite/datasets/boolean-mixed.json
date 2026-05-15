@@ -1,0 +1,9 @@
+{
+  "id": "boolean-mixed",
+  "description": "Documents with multiple text fields for boolean query tests",
+  "documents": [
+    { "_id": "1", "key": "one" },
+    { "_id": "2", "key": "two" },
+    { "_id": "3", "key": "three four" }
+  ]
+}

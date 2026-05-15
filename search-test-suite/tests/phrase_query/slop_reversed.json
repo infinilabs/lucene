@@ -1,0 +1,73 @@
+{
+  "description": "Phrase query with slop allowing reversed term order",
+  "source": "TestPhraseQuery.testOrderDoesntMatter + testNotCloseEnough + testBarelyCloseEnough (Lucene core)",
+  "dataset": "phrase-sentences",
+  "schema": "text-with-positions",
+  "tests": [
+    {
+      "id": "phrase-reversed-slop2-match",
+      "description": "Reversed terms 'two one' with slop=2 matches (minimum slop for reversal)",
+      "query": {
+        "type": "phrase",
+        "field": "field",
+        "terms": ["two", "one"],
+        "slop": 2
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "phrase-reversed-slop1-no-match",
+      "description": "Reversed terms 'two one' with slop=1 does NOT match",
+      "query": {
+        "type": "phrase",
+        "field": "field",
+        "terms": ["two", "one"],
+        "slop": 1
+      },
+      "expected": {
+        "count": 0
+      }
+    },
+    {
+      "id": "phrase-distant-not-close-enough",
+      "description": "Terms 'one five' with slop=2 does NOT match (4 positions apart, need slop >= 3)",
+      "query": {
+        "type": "phrase",
+        "field": "field",
+        "terms": ["one", "five"],
+        "slop": 2
+      },
+      "expected": {
+        "count": 0
+      }
+    },
+    {
+      "id": "phrase-distant-barely-close-enough",
+      "description": "Terms 'one five' with slop=3 matches (barely sloppy enough)",
+      "query": {
+        "type": "phrase",
+        "field": "field",
+        "terms": ["one", "five"],
+        "slop": 3
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "phrase-reversed-three-one-no-match",
+      "description": "Reversed distant terms 'three one' with slop=2 does NOT match",
+      "query": {
+        "type": "phrase",
+        "field": "field",
+        "terms": ["three", "one"],
+        "slop": 2
+      },
+      "expected": {
+        "count": 0
+      }
+    }
+  ]
+}

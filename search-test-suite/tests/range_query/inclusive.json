@@ -1,0 +1,28 @@
+{
+  "description": "Range query with inclusive bounds (lower <= value <= upper)",
+  "source": "TestTermRangeQuery.testInclusive (Lucene core)",
+  "dataset": "range-letters",
+  "schema": "keyword-content-field",
+  "tests": [
+    {
+      "id": "range-inclusive-both",
+      "description": "Range [A, C] inclusive on both ends matches A, B, C",
+      "query": {
+        "type": "range",
+        "field": "content",
+        "lower": "A",
+        "upper": "C",
+        "include_lower": true,
+        "include_upper": true
+      },
+      "expected": {
+        "count": 3,
+        "hits": {
+          "must_contain": ["A", "B", "C"],
+          "must_not_contain": ["D"]
+        },
+        "match_field": "content"
+      }
+    }
+  ]
+}

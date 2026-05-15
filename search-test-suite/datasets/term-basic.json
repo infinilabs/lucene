@@ -1,0 +1,8 @@
+{
+  "id": "term-basic",
+  "description": "Simple documents for basic term query matching",
+  "documents": [
+    { "_id": "1", "foo": "bar" },
+    { "_id": "2", "foo": "baz" }
+  ]
+}

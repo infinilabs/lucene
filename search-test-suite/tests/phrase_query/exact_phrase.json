@@ -1,0 +1,47 @@
+{
+  "description": "Exact phrase query matching (slop=0)",
+  "source": "TestPhraseQuery.testExact (Lucene core)",
+  "dataset": "phrase-sentences",
+  "schema": "text-with-positions",
+  "tests": [
+    {
+      "id": "phrase-exact-match",
+      "description": "Exact phrase 'four five' matches document containing 'one two three four five'",
+      "query": {
+        "type": "phrase",
+        "field": "field",
+        "terms": ["four", "five"],
+        "slop": 0
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "phrase-exact-reversed-no-match",
+      "description": "Reversed phrase 'two one' with slop=0 does NOT match (wrong order)",
+      "query": {
+        "type": "phrase",
+        "field": "field",
+        "terms": ["two", "one"],
+        "slop": 0
+      },
+      "expected": {
+        "count": 0
+      }
+    },
+    {
+      "id": "phrase-exact-adjacent",
+      "description": "Adjacent terms 'one two' with slop=0 matches",
+      "query": {
+        "type": "phrase",
+        "field": "field",
+        "terms": ["one", "two"],
+        "slop": 0
+      },
+      "expected": {
+        "count": 1
+      }
+    }
+  ]
+}

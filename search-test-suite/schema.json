@@ -1,0 +1,285 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/infinilabs/lucene/search-test-suite/schema.json",
+  "title": "Search Test Suite - Test File Schema",
+  "description": "Validates test files in the search-test-suite format",
+  "type": "object",
+  "required": ["description", "dataset", "schema", "tests"],
+  "properties": {
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of this test suite"
+    },
+    "source": {
+      "type": "string",
+      "description": "Original source test class/method reference"
+    },
+    "dataset": {
+      "type": "string",
+      "description": "ID of the dataset file to use (without .json extension)"
+    },
+    "schema": {
+      "type": "string",
+      "description": "ID of the schema file to use (without .json extension)"
+    },
+    "tests": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/test_case"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "test_case": {
+      "type": "object",
+      "required": ["id", "description", "query", "expected"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]*$",
+          "description": "Unique test case identifier"
+        },
+        "description": {
+          "type": "string"
+        },
+        "query": {
+          "$ref": "#/definitions/query"
+        },
+        "expected": {
+          "$ref": "#/definitions/expected"
+        }
+      },
+      "additionalProperties": false
+    },
+    "query": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "term",
+            "boolean",
+            "phrase",
+            "fuzzy",
+            "prefix",
+            "wildcard",
+            "regexp",
+            "range",
+            "match_all",
+            "match_none",
+            "disjunction_max"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "type": { "const": "term" } } },
+          "then": {
+            "required": ["type", "field", "value"],
+            "properties": {
+              "type": {},
+              "field": { "type": "string" },
+              "value": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "boolean" } } },
+          "then": {
+            "required": ["type", "clauses"],
+            "properties": {
+              "type": {},
+              "clauses": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["occur", "query"],
+                  "properties": {
+                    "occur": {
+                      "type": "string",
+                      "enum": ["must", "should", "must_not", "filter"]
+                    },
+                    "query": { "$ref": "#/definitions/query" }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "min_should_match": { "type": "integer", "minimum": 0 }
+            },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "phrase" } } },
+          "then": {
+            "required": ["type", "field", "terms"],
+            "properties": {
+              "type": {},
+              "field": { "type": "string" },
+              "terms": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 1
+              },
+              "slop": { "type": "integer", "minimum": 0, "default": 0 }
+            },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "fuzzy" } } },
+          "then": {
+            "required": ["type", "field", "value"],
+            "properties": {
+              "type": {},
+              "field": { "type": "string" },
+              "value": { "type": "string" },
+              "max_edits": { "type": "integer", "minimum": 0, "maximum": 2, "default": 2 },
+              "prefix_length": { "type": "integer", "minimum": 0, "default": 0 },
+              "max_expansions": { "type": "integer", "minimum": 1 }
+            },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "prefix" } } },
+          "then": {
+            "required": ["type", "field", "value"],
+            "properties": {
+              "type": {},
+              "field": { "type": "string" },
+              "value": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "wildcard" } } },
+          "then": {
+            "required": ["type", "field", "pattern"],
+            "properties": {
+              "type": {},
+              "field": { "type": "string" },
+              "pattern": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "regexp" } } },
+          "then": {
+            "required": ["type", "field", "pattern"],
+            "properties": {
+              "type": {},
+              "field": { "type": "string" },
+              "pattern": { "type": "string" },
+              "flags": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["case_insensitive", "multiline", "dotall"]
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "range" } } },
+          "then": {
+            "required": ["type", "field"],
+            "properties": {
+              "type": {},
+              "field": { "type": "string" },
+              "lower": { "type": ["string", "number", "null"] },
+              "upper": { "type": ["string", "number", "null"] },
+              "include_lower": { "type": "boolean", "default": true },
+              "include_upper": { "type": "boolean", "default": true }
+            },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "match_all" } } },
+          "then": {
+            "properties": {
+              "type": {}
+            },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "match_none" } } },
+          "then": {
+            "properties": {
+              "type": {},
+              "reason": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "disjunction_max" } } },
+          "then": {
+            "required": ["type", "queries"],
+            "properties": {
+              "type": {},
+              "queries": {
+                "type": "array",
+                "items": { "$ref": "#/definitions/query" },
+                "minItems": 1
+              },
+              "tie_breaker": { "type": "number", "minimum": 0, "maximum": 1 }
+            },
+            "additionalProperties": false
+          }
+        }
+      ]
+    },
+    "expected": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Exact total hit count"
+        },
+        "count_min": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Minimum expected hit count"
+        },
+        "ordered": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Strict order of result field values by relevance"
+        },
+        "hits": {
+          "type": "object",
+          "properties": {
+            "must_contain": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Field values that MUST appear in results"
+            },
+            "must_not_contain": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Field values that MUST NOT appear in results"
+            }
+          },
+          "additionalProperties": false
+        },
+        "match_field": {
+          "type": "string",
+          "description": "Which stored field to check values against (default: query field)"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

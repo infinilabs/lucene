@@ -1,0 +1,28 @@
+{
+  "description": "Range query with exclusive bounds (lower < value < upper)",
+  "source": "TestTermRangeQuery.testExclusive (Lucene core)",
+  "dataset": "range-letters",
+  "schema": "keyword-content-field",
+  "tests": [
+    {
+      "id": "range-exclusive-both",
+      "description": "Range (A, C) exclusive on both ends matches only B",
+      "query": {
+        "type": "range",
+        "field": "content",
+        "lower": "A",
+        "upper": "C",
+        "include_lower": false,
+        "include_upper": false
+      },
+      "expected": {
+        "count": 1,
+        "hits": {
+          "must_contain": ["B"],
+          "must_not_contain": ["A", "C", "D"]
+        },
+        "match_field": "content"
+      }
+    }
+  ]
+}

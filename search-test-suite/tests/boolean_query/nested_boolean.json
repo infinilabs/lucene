@@ -1,0 +1,31 @@
+{
+  "description": "Nested boolean query with inner boolean clauses",
+  "source": "TestBooleanQuery.testEquality (Lucene core)",
+  "dataset": "boolean-mixed",
+  "schema": "text-key-field",
+  "tests": [
+    {
+      "id": "bool-nested-should",
+      "description": "Nested boolean: outer SHOULD(term) + inner SHOULD(term, term) returns matching docs",
+      "query": {
+        "type": "boolean",
+        "clauses": [
+          { "occur": "should", "query": { "type": "term", "field": "key", "value": "one" } },
+          {
+            "occur": "should",
+            "query": {
+              "type": "boolean",
+              "clauses": [
+                { "occur": "should", "query": { "type": "term", "field": "key", "value": "two" } },
+                { "occur": "should", "query": { "type": "term", "field": "key", "value": "three" } }
+              ]
+            }
+          }
+        ]
+      },
+      "expected": {
+        "count": 3
+      }
+    }
+  ]
+}

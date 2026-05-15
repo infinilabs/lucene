@@ -1,0 +1,9 @@
+{
+  "id": "match-all-basic",
+  "description": "Simple documents for match-all and match-none query tests",
+  "documents": [
+    { "_id": "1", "key": "one" },
+    { "_id": "2", "key": "two" },
+    { "_id": "3", "key": "three four" }
+  ]
+}

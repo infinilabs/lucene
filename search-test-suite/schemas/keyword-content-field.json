@@ -1,0 +1,12 @@
+{
+  "id": "keyword-content-field",
+  "description": "A keyword field named 'content' for range query tests",
+  "fields": [
+    {
+      "name": "content",
+      "type": "keyword",
+      "stored": true,
+      "indexed": true
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "fuzzy-names",
+  "description": "German-style names for fuzzy matching with real-world data",
+  "documents": [
+    { "_id": "1", "field": "LANGE" },
+    { "_id": "2", "field": "LUETH" },
+    { "_id": "3", "field": "PIRSING" },
+    { "_id": "4", "field": "RIEGEL" },
+    { "_id": "5", "field": "TRZECZIAK" },
+    { "_id": "6", "field": "WALKER" },
+    { "_id": "7", "field": "WBR" },
+    { "_id": "8", "field": "WE" },
+    { "_id": "9", "field": "WEB" },
+    { "_id": "10", "field": "WEBE" },
+    { "_id": "11", "field": "WEBER" },
+    { "_id": "12", "field": "WEBERE" },
+    { "_id": "13", "field": "WEBREE" },
+    { "_id": "14", "field": "WEBEREI" },
+    { "_id": "15", "field": "WBRE" },
+    { "_id": "16", "field": "WITTKOPF" },
+    { "_id": "17", "field": "WOJNAROWSKI" },
+    { "_id": "18", "field": "WRICKE" }
+  ]
+}

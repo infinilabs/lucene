@@ -1,0 +1,58 @@
+{
+  "description": "Range query with open-ended bounds (null lower or upper)",
+  "source": "TestTermRangeQuery.testAllDocs (Lucene core)",
+  "dataset": "range-letters",
+  "schema": "keyword-content-field",
+  "tests": [
+    {
+      "id": "range-open-both-ends",
+      "description": "Range [null, null] (open on both ends) matches all documents",
+      "query": {
+        "type": "range",
+        "field": "content",
+        "lower": null,
+        "upper": null,
+        "include_lower": true,
+        "include_upper": true
+      },
+      "expected": {
+        "count": 4
+      }
+    },
+    {
+      "id": "range-open-upper",
+      "description": "Range [B, null] matches B, C, D",
+      "query": {
+        "type": "range",
+        "field": "content",
+        "lower": "B",
+        "upper": null,
+        "include_lower": true,
+        "include_upper": true
+      },
+      "expected": {
+        "count": 3,
+        "hits": {
+          "must_contain": ["B", "C", "D"],
+          "must_not_contain": ["A"]
+        },
+        "match_field": "content"
+      }
+    },
+    {
+      "id": "range-empty-string-lower",
+      "description": "Range ['', null] matches all documents (empty string sorts before everything)",
+      "query": {
+        "type": "range",
+        "field": "content",
+        "lower": "",
+        "upper": null,
+        "include_lower": true,
+        "include_upper": true
+      },
+      "expected": {
+        "count": 4
+      }
+    }
+  ]
+}

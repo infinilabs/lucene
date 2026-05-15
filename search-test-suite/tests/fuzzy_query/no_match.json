@@ -1,0 +1,36 @@
+{
+  "description": "Fuzzy query with no matching documents",
+  "source": "TestFuzzyQuery.testFuzziness (Lucene core)",
+  "dataset": "fuzzy-words",
+  "schema": "single-keyword-field",
+  "tests": [
+    {
+      "id": "fuzzy-no-match-distant",
+      "description": "Fuzzy 'xxxxx' matches nothing (too far from all indexed terms)",
+      "query": {
+        "type": "fuzzy",
+        "field": "field",
+        "value": "xxxxx",
+        "max_edits": 2,
+        "prefix_length": 0
+      },
+      "expected": {
+        "count": 0
+      }
+    },
+    {
+      "id": "fuzzy-no-match-3-edits",
+      "description": "Fuzzy 'aaccc' matches nothing (edit distance 3 to 'aaaaa', exceeds max_edits=2)",
+      "query": {
+        "type": "fuzzy",
+        "field": "field",
+        "value": "aaccc",
+        "max_edits": 2,
+        "prefix_length": 0
+      },
+      "expected": {
+        "count": 0
+      }
+    }
+  ]
+}

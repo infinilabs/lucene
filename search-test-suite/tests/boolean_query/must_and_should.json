@@ -1,0 +1,55 @@
+{
+  "description": "Boolean query with MUST, SHOULD, MUST_NOT clauses",
+  "source": "TestMatchAllDocsQuery.testQuery + TestBooleanQuery (Lucene core)",
+  "dataset": "boolean-mixed",
+  "schema": "text-key-field",
+  "tests": [
+    {
+      "id": "bool-must-match-all-and-term",
+      "description": "MUST match_all + MUST term('three') returns only docs containing 'three'",
+      "query": {
+        "type": "boolean",
+        "clauses": [
+          { "occur": "must", "query": { "type": "match_all" } },
+          { "occur": "must", "query": { "type": "term", "field": "key", "value": "three" } }
+        ]
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "bool-double-must-match-all",
+      "description": "Two MUST match_all clauses still returns all documents",
+      "query": {
+        "type": "boolean",
+        "clauses": [
+          { "occur": "must", "query": { "type": "match_all" } },
+          { "occur": "must", "query": { "type": "match_all" } }
+        ]
+      },
+      "expected": {
+        "count": 3
+      }
+    },
+    {
+      "id": "bool-should-terms",
+      "description": "SHOULD with two terms returns docs matching either",
+      "query": {
+        "type": "boolean",
+        "clauses": [
+          { "occur": "should", "query": { "type": "term", "field": "key", "value": "one" } },
+          { "occur": "should", "query": { "type": "term", "field": "key", "value": "two" } }
+        ]
+      },
+      "expected": {
+        "count": 2,
+        "hits": {
+          "must_contain": ["one", "two"],
+          "must_not_contain": ["three four"]
+        },
+        "match_field": "key"
+      }
+    }
+  ]
+}

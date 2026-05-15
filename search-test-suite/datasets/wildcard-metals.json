@@ -1,0 +1,8 @@
+{
+  "id": "wildcard-metals",
+  "description": "Metal-related words for wildcard pattern matching tests",
+  "documents": [
+    { "_id": "1", "body": "metal" },
+    { "_id": "2", "body": "metals" }
+  ]
+}

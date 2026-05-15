@@ -1,0 +1,56 @@
+{
+  "description": "Basic term query matching on keyword fields",
+  "source": "TestTermQuery.testCreateWeightDoesNotSeekIfScoresAreNotNeeded (Lucene core)",
+  "dataset": "term-basic",
+  "schema": "keyword-foo-field",
+  "tests": [
+    {
+      "id": "term-exact-match",
+      "description": "Term query matches exactly one document with the term 'bar'",
+      "query": {
+        "type": "term",
+        "field": "foo",
+        "value": "bar"
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "term-no-match",
+      "description": "Term query for non-existent value returns no results",
+      "query": {
+        "type": "term",
+        "field": "foo",
+        "value": "nonexistent"
+      },
+      "expected": {
+        "count": 0
+      }
+    },
+    {
+      "id": "term-different-value",
+      "description": "Term query for 'baz' matches the other document",
+      "query": {
+        "type": "term",
+        "field": "foo",
+        "value": "baz"
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "term-wrong-field",
+      "description": "Term query on non-existent field returns no results",
+      "query": {
+        "type": "term",
+        "field": "nonexistent",
+        "value": "bar"
+      },
+      "expected": {
+        "count": 0
+      }
+    }
+  ]
+}

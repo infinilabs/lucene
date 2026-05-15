@@ -1,0 +1,58 @@
+{
+  "id": "text-with-positions",
+  "description": "Text fields with position data for phrase query tests",
+  "fields": [
+    {
+      "name": "field",
+      "type": "text",
+      "stored": true,
+      "indexed": true,
+      "analyzer": {
+        "tokenizer": "whitespace",
+        "lowercase": false
+      }
+    },
+    {
+      "name": "repeated",
+      "type": "text",
+      "stored": true,
+      "indexed": true,
+      "analyzer": {
+        "tokenizer": "whitespace",
+        "lowercase": false,
+        "position_increment_gap": 100
+      }
+    },
+    {
+      "name": "repeated_2",
+      "type": "text",
+      "stored": true,
+      "indexed": true,
+      "analyzer": {
+        "tokenizer": "whitespace",
+        "lowercase": false,
+        "position_increment_gap": 100
+      }
+    },
+    {
+      "name": "palindrome",
+      "type": "text",
+      "stored": true,
+      "indexed": true,
+      "analyzer": {
+        "tokenizer": "whitespace",
+        "lowercase": false
+      }
+    },
+    {
+      "name": "nonexist",
+      "type": "text",
+      "stored": true,
+      "indexed": true,
+      "analyzer": {
+        "tokenizer": "whitespace",
+        "lowercase": false
+      }
+    }
+  ]
+}

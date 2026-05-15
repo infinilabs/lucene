@@ -1,0 +1,54 @@
+{
+  "description": "Fuzzy query result ordering by edit distance (closest match first)",
+  "source": "TestFuzzyQuery.testFuzziness scoring section (Lucene core)",
+  "dataset": "fuzzy-words",
+  "schema": "single-keyword-field",
+  "tests": [
+    {
+      "id": "fuzzy-ordering-bbbbb",
+      "description": "Fuzzy 'bbbbb' results ordered by edit distance: bbbbb (0), abbbb (1), aabbb (2)",
+      "query": {
+        "type": "fuzzy",
+        "field": "field",
+        "value": "bbbbb",
+        "max_edits": 2,
+        "prefix_length": 0
+      },
+      "expected": {
+        "count": 3,
+        "ordered": ["bbbbb", "abbbb", "aabbb"]
+      }
+    },
+    {
+      "id": "fuzzy-ordering-aaaaa",
+      "description": "Fuzzy 'aaaaa' results ordered by edit distance: aaaaa (0), aaaab (1), aaabb (2)",
+      "query": {
+        "type": "fuzzy",
+        "field": "field",
+        "value": "aaaaa",
+        "max_edits": 2,
+        "prefix_length": 0
+      },
+      "expected": {
+        "count": 3,
+        "ordered": ["aaaaa", "aaaab", "aaabb"]
+      }
+    },
+    {
+      "id": "fuzzy-max-expansions-2",
+      "description": "Fuzzy 'bbbbb' with max_expansions=2 returns only top 2 matches",
+      "query": {
+        "type": "fuzzy",
+        "field": "field",
+        "value": "bbbbb",
+        "max_edits": 2,
+        "prefix_length": 0,
+        "max_expansions": 2
+      },
+      "expected": {
+        "count": 2,
+        "ordered": ["bbbbb", "abbbb"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "range-letters",
+  "description": "Single-letter documents for range query tests",
+  "documents": [
+    { "_id": "1", "content": "A" },
+    { "_id": "2", "content": "B" },
+    { "_id": "3", "content": "C" },
+    { "_id": "4", "content": "D" }
+  ]
+}

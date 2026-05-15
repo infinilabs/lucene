@@ -1,0 +1,68 @@
+{
+  "description": "Regexp query with basic patterns on text content",
+  "source": "TestRegexpQuery (Lucene core)",
+  "dataset": "regexp-text",
+  "schema": "single-text-field",
+  "tests": [
+    {
+      "id": "regexp-quick-match",
+      "description": "Pattern 'q.[aeiou]c.*' matches 'quick'",
+      "query": {
+        "type": "regexp",
+        "field": "field",
+        "pattern": "q.[aeiou]c.*"
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "regexp-no-anchor",
+      "description": "Pattern '.[aeiou]c.*' does NOT match (regexp matches whole term, not substring)",
+      "query": {
+        "type": "regexp",
+        "field": "field",
+        "pattern": ".[aeiou]c.*"
+      },
+      "expected": {
+        "count": 0
+      }
+    },
+    {
+      "id": "regexp-incomplete-no-match",
+      "description": "Pattern 'q.[aeiou]c' does NOT match (must match entire term 'quick')",
+      "query": {
+        "type": "regexp",
+        "field": "field",
+        "pattern": "q.[aeiou]c"
+      },
+      "expected": {
+        "count": 0
+      }
+    },
+    {
+      "id": "regexp-digit-star",
+      "description": "Pattern '\\d*' matches term consisting of all digits",
+      "query": {
+        "type": "regexp",
+        "field": "field",
+        "pattern": "\\d*"
+      },
+      "expected": {
+        "count": 1
+      }
+    },
+    {
+      "id": "regexp-six-digits",
+      "description": "Pattern '\\d{6}' matches '493432' (exactly 6 digits)",
+      "query": {
+        "type": "regexp",
+        "field": "field",
+        "pattern": "\\d{6}"
+      },
+      "expected": {
+        "count": 1
+      }
+    }
+  ]
+}

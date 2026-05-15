@@ -1,0 +1,12 @@
+{
+  "id": "keyword-category-field",
+  "description": "A keyword field named 'category' for prefix query tests",
+  "fields": [
+    {
+      "name": "category",
+      "type": "keyword",
+      "stored": true,
+      "indexed": true
+    }
+  ]
+}
